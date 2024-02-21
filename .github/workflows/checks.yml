@@ -17,6 +17,3 @@ jobs:
 
       
 # django 세팅 -> github push -> actions
-# git add .
-# git commit -m "Project Settings"
-# git push -u origin main
