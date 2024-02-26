@@ -1,5 +1,6 @@
 version: '3.11'
 services:
+# 1. First Container: Django
   app:
     build:
       context: .
@@ -10,5 +11,24 @@ services:
     volumes:
       - ./app:/app
     command:
-      sh -c "python manage.py runserver 0.0.0.0:8000"
-   
+      sh -c "python manage.py wait_for-db &&
+              python manage.py migrate &&
+              python manage.py runserver 0.0.0.0:8000"
+    environment:
+     - DB_HOST=db
+     - DB_NAME=youtube
+     - DB_USER=jiwon
+     - DB_PASSWORD=password123
+    depends_on:
+    - db
+
+
+# 2. Second Container: PostgreSQL
+  db:
+    image: postgres:16
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=youtube
+      - POSTGRES_USER=jiwon
+      - POSTGRES_PASSWORD=password123
