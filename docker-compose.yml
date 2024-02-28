@@ -1,29 +1,28 @@
-version: '3.11'
+version: "3.11"
 services:
-# 1. First Container: Django
+  # 1. First Container: Django
   app:
     build:
       context: .
       args:
-       - DEV=true
+        - DEV=true
     ports:
       - "8000:8000"
     volumes:
       - ./app:/app
-    command:
+    command: >
       sh -c "python manage.py wait_for_db &&
-              python manage.py migrate &&
-              python manage.py runserver 0.0.0.0:8000"
+             python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
     environment:
-     - DB_HOST=db
-     - DB_NAME=youtube
-     - DB_USER=jiwon
-     - DB_PASSWORD=password123
+      - DB_HOST=db
+      - DB_NAME=youtube
+      - DB_USER=jiwon
+      - DB_PASS=password123
     depends_on:
-    - db
+      - db
 
-
-# 2. Second Container: PostgreSQL
+  # 2. Second Container: PostgreSQL
   db:
     image: postgres:16
     volumes:
@@ -32,3 +31,9 @@ services:
       - POSTGRES_DB=youtube
       - POSTGRES_USER=jiwon
       - POSTGRES_PASSWORD=password123
+# docker-compose down
+# docker-compose up --build
+
+# 오후
+# - db 컨테이너가 준비되면 -> django에서 db connection 시도
+# - CustomUser Model
