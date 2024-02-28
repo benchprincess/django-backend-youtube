@@ -14,3 +14,5 @@ app/*/*/*/__pycache__/
 .venv
 venv/
 
+# postgresql
+/data

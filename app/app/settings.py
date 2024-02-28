@@ -27,18 +27,28 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+CUSTOM_USER_APPS=[
+    'users.apps.UsersConfig',
+    'videos.apps.VideoConfig',
+    'comments.apps.CommentConfig',
+    'reactions.apps.ReactionsConfig',
+    'subscriptionsapps.SubscriptionsConfig',
+    'notifications.apps.NotificationsConfig',
+    'core',
+    'rest_framework',
+    'drf_spectacular',
+    ]
 
-# Application definition
-
-INSTALLED_APPS = [
+DJANGO_SYSTEM_APPS=[
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core',
 ]
+
+INSTALLED_APPS = CUSTOM_USER_APPS + DJANGO_SYSTEM_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -81,7 +91,7 @@ DATABASES = {
         'HOST': os.environ.get('DB_HOST'),
         'NAME': os.environ.get('DB_NAME'),
         "USER": os.environ.get('DB_USER'),
-        "PASSWORD": os.environ.get('DB_PASS')
+        "PASSWORD": os.environ.get('DB_PASSWORD')
     }
 }
 
@@ -116,4 +126,8 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'users.USer'
+AUTH_USER_MODEL = 'users.User'
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema'
+}

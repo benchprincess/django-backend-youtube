@@ -1,0 +1,191 @@
+1. test_command.py
+=> psycop2 import 부분 이름 겹쳐서 바꿔야함
+
+==>> from psycopg2 import OperationalError as Psycopg2OError
+
+
+2. test_command.py
+=> db 연결에 지연됐을때 
+
+@patch('time.sleep')
+time.sleep() 불러오면 됨
+ef test_wait_for_db_delay(self, patched_sleep, patched_getitem):
+
+- patched_sleep 추가
+
+- test 실행
+
+(사람들 오류 봐줌)
+
+3. db 연결 시도
+지금까지는 도커가 돌아갈때 테스트 코드만 작성했음
+그래서 wait_for_db라는 커맨드를 실행해야함
+
+checks.yml 로 이동
+- name: Test
+        run: docker-compose run --rm app sh -c "python manage.py wait_for_db && python manage.py test"
+
+4. docker-compose 로 이동
+
+커맨드 부분
+
+  command:
+      sh -c "python manage.py wait_for-db &&
+              python manage.py migrate &&
+              python manage.py runserver 0.0.0.0:8000"
+
+
+5. .gitignore 파일 생성
+
+밑에 다 복붙하세용
+
+# Django #
+*.log
+*.pot
+*.pyc
+__pycache__
+db.sqlite3
+media
+
+# Backup files # 
+*.bak 
+
+# If you are using PyCharm # 
+# User-specific stuff
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+
+# AWS User-specific
+.idea/**/aws.xml
+
+# Generated files
+.idea/**/contentModel.xml
+
+# Sensitive or high-churn files
+.idea/**/dataSources/
+.idea/**/dataSources.ids
+.idea/**/dataSources.local.xml
+.idea/**/sqlDataSources.xml
+.idea/**/dynamic.xml
+.idea/**/uiDesigner.xml
+.idea/**/dbnavigator.xml
+
+# Gradle
+.idea/**/gradle.xml
+.idea/**/libraries
+
+# File-based project format
+*.iws
+
+# IntelliJ
+out/
+
+# JIRA plugin
+atlassian-ide-plugin.xml
+
+# Python # 
+*.py[cod] 
+*$py.class 
+
+# Distribution / packaging 
+.Python build/ 
+develop-eggs/ 
+dist/ 
+downloads/ 
+eggs/ 
+.eggs/ 
+lib/ 
+lib64/ 
+parts/ 
+sdist/ 
+var/ 
+wheels/ 
+*.whl
+*.egg-info/ 
+.installed.cfg 
+*.egg 
+*.manifest 
+*.spec 
+
+# Installer logs 
+pip-log.txt 
+pip-delete-this-directory.txt 
+
+# Unit test / coverage reports 
+htmlcov/ 
+.tox/ 
+.coverage 
+.coverage.* 
+.cache 
+.pytest_cache/ 
+nosetests.xml 
+coverage.xml 
+*.cover 
+.hypothesis/ 
+
+# Jupyter Notebook 
+.ipynb_checkpoints 
+
+# pyenv 
+.python-version 
+
+# celery 
+celerybeat-schedule.* 
+
+# SageMath parsed files 
+*.sage.py 
+
+# Environments 
+.env 
+.venv 
+env/ 
+venv/ 
+ENV/ 
+env.bak/ 
+venv.bak/ 
+
+# mkdocs documentation 
+/site 
+
+# mypy 
+.mypy_cache/ 
+
+# Sublime Text # 
+*.tmlanguage.cache 
+*.tmPreferences.cache 
+*.stTheme.cache 
+*.sublime-workspace 
+*.sublime-project 
+
+# sftp configuration file 
+sftp-config.json 
+
+# Package control specific files Package 
+Control.last-run 
+Control.ca-list 
+Control.ca-bundle 
+Control.system-ca-bundle 
+GitHub.sublime-settings 
+
+# Visual Studio Code # 
+.vscode/* 
+!.vscode/settings.json 
+!.vscode/tasks.json 
+!.vscode/launch.json 
+!.vscode/extensions.json 
+.history
+
+6. docker-ignore 파일에 작성
+
+# postgresql
+/data
+
+
+7. 잘 되는지 확인
+
+docker compose down
+docker compose build
+docker compose up
