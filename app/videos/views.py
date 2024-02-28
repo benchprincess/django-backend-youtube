@@ -2,6 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Video
 from .serializers import VideoSerializer
+from rest_framework.exceptions import NotFound
 
 
 
@@ -18,9 +19,6 @@ class VideoList(APIView):
         serializer = VideoSerializer(videos, many-=True)
 
         return Response(serializer.data)
-    
-    def post(self):
-        pass
 
 # 2. VideoDetail
 # api/v1/videos/{video_id}
@@ -28,3 +26,16 @@ class VideoList(APIView):
 # - POST: X
 # - PUT: 특정 비디오 정보 업데이트(수정)
 # - DELETE: 특정 비디오 삭제
+class VideoDetail(APIView):
+    def get_object(self, pk): #pk: Primary Key(ID)
+        try:
+            return Video.objects.get(pk=pk)
+        except Video.DoesNotExist:
+            raise NotFound
+    
+    def get(self, request, pk):
+        video = self.get_object(pk)
+
+        serializer = VideoSerializer(video)
+
+        return Response(serializer.data)
