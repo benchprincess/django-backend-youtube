@@ -183,8 +183,12 @@ GitHub.sublime-settings
 # postgresql
 /data
 
+7. .gitignore 파일에 작성
 
-7. 잘 되는지 확인
+# postgresql
+/data
+
+8. 잘 되는지 확인
 
 docker compose down
 docker compose build

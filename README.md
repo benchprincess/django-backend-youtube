@@ -138,3 +138,5 @@ api/v1/videos/{video_id}
 - DELETE: 특정 비디오 삭제
 
 urls.py 등록
+
+(6) 
