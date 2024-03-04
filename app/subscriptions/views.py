@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from rest_framework.views import APIView
 
-# Create your views here.
+class SubscriptionList(APIView):
+    def post(self, request):
+        pass
+
+class SubscriptionDetail(APIView):
+    def delete(self, request, pk):
+        pass
