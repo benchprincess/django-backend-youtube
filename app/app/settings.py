@@ -1,10 +1,10 @@
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = 'django-insecure-^stmoy57t++si5bvsf9!o($^w8rrrnb7do_5o2ox=t36$v5v7j'
+SECRET_KEY = 'test'
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 DJANGO_SYSTEM_APPS = [
     'django.contrib.admin',
@@ -127,3 +127,8 @@ CHANNEL_LAYERS = {
         "BACKEND": "channels.layers.InMemoryChannelLayer"
     }
 }
+
+STATIC_URL = '/static/static/'
+MEDIA_URL = '/static/media/'
+MEDIA_ROOT = '/vol/web/media'
+STATIC_ROOT = '/vol/web/static'

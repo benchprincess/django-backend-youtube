@@ -173,13 +173,8 @@ docker-compose build
 - 배포
 
 (9) Deployment
-- AWS => 배포
-- 배포까지
-
-# REst API
-
-C: CREATE
-R
-U
-D
-
+- IAM 유저 생성
+- EC2 instance 생성 (Amazone Linux) -> 프리티어
+- EC2 SSH 접속 -> Finger Print
+- AWS EC2
+- git, docker-compose 설치 & build
