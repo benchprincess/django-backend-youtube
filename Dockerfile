@@ -24,8 +24,15 @@ RUN python -m venv /py && \
     adduser \
         --disabled-password \
         --no-create-home \
-        django-user
+        django-user \
 
-ENV PATH="/py/bin:$PATH"
+    mkdir -p /vol/web && \
+    chown -R django-user:django-user /vol && \
+    chmod -R 755 /vol && \
+    chmod -R +x /scripts
+
+ENV PATH="/scripts:/py/bin:$PATH"
 
 USER django-user
+
+CMD ["run".sh]

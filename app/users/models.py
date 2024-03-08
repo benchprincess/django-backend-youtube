@@ -11,7 +11,7 @@ class UserManager(BaseUserManager):
     def create_user(self, email, password, **extra_fields):
         if not email:
             raise ValueError('이메일 주소가 입력되지 않았습니다.')
-        
+
         user = self.model(email=email, **extra_fields)
         user.set_password(password) # 비밀번호 해쉬화
         user.save(using=self._db)
@@ -32,7 +32,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.CharField(max_length=255, unique=True) # username 역할
     nickname = models.CharField(max_length=255)
     is_business = models.BooleanField(default=False)
-
+    
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 

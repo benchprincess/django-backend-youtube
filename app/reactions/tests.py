@@ -1,6 +1,10 @@
 from rest_framework.test import APITestCase
 from users.models import User
 from videos.models import Video
+from .models import Reaction
+from django.urls import reverse
+from rest_framework import status
+import pdb
 
 
 class ReactionAPITestCase(APITestCase):
@@ -8,7 +12,7 @@ class ReactionAPITestCase(APITestCase):
     def setUp(self):
         self.user = User.objects.creaet_user(email='jiwon@gmail.com', password='password123')
 
-        Video.objects.create(
+        self.video = Video.objects.create(
             title='test video',
             link='http://test.com',
             user=self.user
@@ -19,7 +23,6 @@ class ReactionAPITestCase(APITestCase):
     # [POST] - 좋아요, 싫어요 생성 및 업데이트
     def test_reaction_detail_post(self):
         url = reverse('video-reaction', kwargs={'video_id':self.video.id})
-        
         data = {
             'reaction' : Reaction.LIKE
         }
@@ -31,5 +34,5 @@ class ReactionAPITestCase(APITestCase):
         self.assertEqual(Reaction.objects.get().reaction, Reaction.LIKE)
 
     # [DELETE] - 좋아요, 싫어요 삭제
-    def test_reaction_detail_delete(self):
-        pass
+    # def test_reaction_detail_delete(self):
+    #     pass

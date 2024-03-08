@@ -139,4 +139,47 @@ api/v1/videos/{video_id}
 
 urls.py 등록
 
-(6) 
+(6)
+(7)
+api/v1/video
+(1) 좋아요, 싫어요 데이터가 보이게끔 하는 게
+(2) 전체 영상 데이터를 내려줄 때, 좋아요 싫어요 개수가 보이게 해줌
+
+like/dislike count
+
+- Reaction Model
+- Video Model
+
+(8) Chatting - SocketIO
+- api/v1/char/msg
+  - [POST]: 채팅 메시지 생성
+- api/v1/chat/room
+  - [POST]: 채팅방 생성
+  - [GET]: 내가 접속해 있는 전체 채팅방 조회
+- api/v1/chat/room/{room_id}
+  - [GET]: 채팅방 조회
+- wss:127.0.0.0.1:8000/ws/chat/{room_id}
+
+1. Chat 모델 생성 startapp chat
+- docker-compose run --rm app sh -c 'python manage.py startapp chat'
+
+2. Django SocketIO 설치 -> Channels Library (pip install channels)
+requiremnets.txt에 아래 문구 추가
+channels>=4.0.0,<4.0.1
+
+docker-compose build
+
+- 채팅 소켓 연결
+- 배포
+
+(9) Deployment
+- AWS => 배포
+- 배포까지
+
+# REst API
+
+C: CREATE
+R
+U
+D
+

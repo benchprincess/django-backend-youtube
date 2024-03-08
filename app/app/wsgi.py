@@ -1,3 +1,5 @@
+# 동기 처리: REST API
+
 """
 WSGI config for app project.
 
