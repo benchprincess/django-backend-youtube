@@ -178,3 +178,39 @@ docker-compose build
 - EC2 SSH 접속 -> Finger Print
 - AWS EC2
 - git, docker-compose 설치 & build
+
+# EC2 인스턴스
+
+EC2 인스턴스 생성 후 연결
+EC2 이름 입력
+amazon Linux 2023 AMI 이미지 선택 (프리티어)
+키페어 선택
+보안 그룹 생성 -> 인터넷에서 HTTP 트래픽 허용 체크
+인스턴스 시작
+인스턴스에 연결 클릭
+터미널에 ssh-add 키페어파일이름 입력해서 ssh에 키페어 연결
+ssh ec2-user@복사한 퍼블릭 ipv4 주소 입력해서 ssh 접속
+ssh-keygen -t ed25519 -b 4096 입력해서 키젠 생성
+cd .ssh -> ls -al -> id_ed25519.pub 파일존재 확인 후 cat 명령어로 열기
+값을 복사해서 깃허브 레포지토리 - settings - Deploy keys - add deploy key 에서 키값에 붙여넣기 후 생성
+터미널에 sudo yum install git -y 입력해서 EC2에 git 설치
+터미널에 sudo yum install docker -y 입력해서 EC2에 docker 설치
+sudo systemctl start docker 도커 실행 명령어
+sudo systemctl enable docker 시스템 링크를 만들어서 운영가능한 상태로 만들어줌. 시스템 부팅 시 알아서 실행해줌
+sudo usermod -aG docker ec2-user : ec2-user에 도커 그룹을 추가한다.
+exit해서 종료후 다시실행해서 권한 적용시켜주기
+sudo curl -L "https://github.com/docker/compose/releases/download/v2.24.6/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose 명령어 실행해서 docker-compose 명령어 사용가능하도록 install 시켜주기
+cd /usr/local/bin 로 이동
+ls -al 명령어로 docker-compose 존재 확인
+sudo chmod +x docker-compose : 슈퍼유저 권한으로 docker-compose 라는 명령어를 실행
+cd ~ 로 최상위폴더이동
+git clone https://github.com/Meoyoug/django-backend-youtube.git 깃 클론해오기
+cd django-backend-youtube 로 클론한 폴더로 이동
+vim .env 명령어로 .env 파일 생성
+DB_HOST=db
+DB_NAME=name
+DB_USER=user
+DB_PASS=pass
+SECRET_KEY=key
+ALLOWED_HOSTS=(EC2의 퍼블릭 IPv4 DNS - 배포후에 이쪽으로 접속해줘야하기 때문)
+입력하고 wq하고 저장 27. docker-compose -f docker-compose-deploy.yml build 명령어로 빌드

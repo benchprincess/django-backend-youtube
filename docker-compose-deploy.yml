@@ -4,8 +4,9 @@ services:
   app:
     build:
       context: .
+    restart: always
     volumes:
-      - -static_data:/vol/web
+      - static-data:/vol/web
     environment:
       - DB_HOST=db
       - DB_NAME=${DB_NAME}
@@ -31,12 +32,12 @@ services:
       context: ./proxy
     restart: always
     ports:
-      - 8000:8000
+      - 80:8000
     depends_on:
       - app
     volumes:
-      - static_data:/vol/static
+      - static-data:/vol/static
 
 volumes:
   postgres-data:
-  static_data:
+  static-data:
